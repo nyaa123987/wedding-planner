@@ -27,7 +27,7 @@ export default function TaskGroup1({ activeGroup, setActiveGroup }: Props) {
 
   const renderExtras = (task: Task) => {
     if (task.id === 1) {
-        return <p>This is the most important part of planning your wedding and it is where it all begins. Consider public holidays while planning your wedding date. But do remember that this is your wedding, if the date works for you and your fiance then go with it, don't let others influence your decision.</p>
+        return <p>This is the most important part of planning your wedding and it is where it all begins. Consider public holidays while planning your wedding date. But do remember that this is your wedding, if the date works for you and your fiance then go with it, don&apos;t let others influence your decision.</p>
     }
     if (task.id === 2) {
         return <p>The most crucial issue in all weddings is the budget - make sure you sort out your budget before any planning begins. If you are splitting the cost between both families then make it clear about who is paying for what. Money can be a major cause of stress in wedding planning, so get organised and get that budget.</p>

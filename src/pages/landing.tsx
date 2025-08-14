@@ -15,26 +15,22 @@ export default function LandingPage() {
     if (session) {
       const user = session.user;
 
-      // Check if profile exists
-      const { data: profile, error } = await supabase
+      const { data: profile } = await supabase
         .from('user_profiles')
         .select('*')
         .eq('id', user.id)
         .single();
 
       if (profile) {
-        // Redirect to dashboard
         router.replace('/');
       } else {
-        // User is logged in but hasn't completed profile
         router.replace('/signup-details');
       }
     }
   };
 
   checkUserState();
-}, []);
-
+}, [router]);
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-white">

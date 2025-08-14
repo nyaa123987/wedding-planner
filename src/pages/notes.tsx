@@ -38,13 +38,12 @@ const NotesPage = () => {
   };
 
   const handleAddNote = () => {
-    // You can open a modal or navigate to a create-note page
-    router.push('/create-note'); // or toggle modal
+    router.push('/create-note');
   };
 
   return (
     <div className="relative p-8 min-h-screen bg-white">
-      {/* Back Arrow */}
+      
       <button
         onClick={() => router.push('/')}
         className="absolute top-6 left-6 p-2 rounded-full hover:bg-gray-200"
@@ -52,17 +51,14 @@ const NotesPage = () => {
         <ArrowLeft className="w-6 h-6" />
       </button>
 
-      {/* Heading */}
       <H1>My Notes</H1>
 
-      {/* Notes Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {notes.map((note) => (
           <NoteCard key={note.id} note={note} />
         ))}
       </div>
 
-      {/* Add Note Button */}
       <button
         onClick={handleAddNote}
         className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition"

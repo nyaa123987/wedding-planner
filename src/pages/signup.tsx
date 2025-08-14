@@ -1,4 +1,3 @@
-// pages/signup.tsx
 'use client';
 import { useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/router';
@@ -11,7 +10,6 @@ export default function SignUpPage() {
   const checkSession = async () => {
     const { data } = await supabase.auth.getSession();
     if (data.session) {
-      // Optional: Check if profile exists and redirect accordingly
       const { data: profile } = await supabase
         .from('user_profiles')
         .select('*')
@@ -62,7 +60,6 @@ export default function SignUpPage() {
       return;
     }
 
-    // Redirect to signup-details page with userId
     router.push(`/signup-details?userId=${userId}`);
   };
 

@@ -19,7 +19,7 @@ export default function SignUpStepTwo() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
+      const { data } = await supabase.auth.getUser();
       if (data?.user?.id) {
         setUserId(data.user.id);
       } else {
