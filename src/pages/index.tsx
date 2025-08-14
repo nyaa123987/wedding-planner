@@ -95,7 +95,7 @@ const Hero = () => {
       </div>
       
       <div className="flex justify-center cursor-pointer">
-        <h1 className="tangerine text-3xl md:text-5xl text-center border-2 border-[#E4B441] p-2 shine-border-bg">Today's Task</h1>
+        <h1 className="tangerine text-3xl md:text-5xl text-center border-2 border-[#E4B441] p-2 shine-border-bg">Today&apos;s Task</h1>
       </div>
 
       <div className="flex justify-center align-middle gap-[5%] bg-[#E6D3C6] py-[2vh] mt-[5vh]">

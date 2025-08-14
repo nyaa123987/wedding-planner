@@ -1,5 +1,6 @@
 import TaskGroup, { Task } from './TaskGroup';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface Props {
   activeGroup: string | null;
@@ -36,7 +37,7 @@ export default function TaskGroup1({ activeGroup, setActiveGroup }: Props) {
       return (
         <div className='flex flex-col'>
             <p>Draw up your guest list and decide if you want to include children.</p>
-            <a className='text-[blue] hover:underline pt-[2vh]' href="/guests">Get started</a>
+            <Link className='text-[blue] hover:underline pt-[2vh]' href="/guests">Get started</Link>
         </div>
       )
     }

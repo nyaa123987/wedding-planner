@@ -12,7 +12,7 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
     { id: 2, text: 'Start planning your honeymoon', completed: false },
     { id: 3, text: 'Choose your invitations', completed: false },
     { id: 4, text: 'Bridal wear (gowns and dresses)', completed: false },
-    { id: 5, text: 'Groom\'s suits', completed: false },
+    { id: 5, text: 'Groom&#39;s suits', completed: false },
     { id: 6, text: 'Shoes (ladies)', completed: false },
     { id: 7, text: 'Shoes (groom)', completed: false },
   ]);

@@ -1,4 +1,3 @@
-// pages/schedule.tsx
 import { useState } from 'react';
 import TaskGroup1 from '@/components/TaskGroup1';
 import TaskGroup2 from '@/components/TaskGroup2';
