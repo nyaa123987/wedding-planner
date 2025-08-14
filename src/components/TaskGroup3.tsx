@@ -12,7 +12,7 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
     { id: 2, text: 'Start planning your honeymoon', completed: false },
     { id: 3, text: 'Choose your invitations', completed: false },
     { id: 4, text: 'Bridal wear (gowns and dresses)', completed: false },
-    { id: 5, text: 'Groom&#39;s suits', completed: false },
+    { id: 5, text: "Groom's suits", completed: false },
     { id: 6, text: 'Shoes (ladies)', completed: false },
     { id: 7, text: 'Shoes (groom)', completed: false },
   ]);
@@ -38,7 +38,7 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
     if (task.id === 4) {
         return (
             <>
-                <p>For the bride: Find a reautable dressmaker or store to design or buy your dress, as well as your bridesmaids' dresses.</p>
+                <p>For the bride: Find a reautable dressmaker or store to design or buy your dress, as well as your bridesmaids&apos; dresses.</p>
                 <a href='/dresses'>See beautiful designs</a>
                 <a href='/dressmakers'>Need a dressmaker vendor?</a>
             </>

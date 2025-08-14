@@ -7,12 +7,13 @@ import '@/styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const { pathname } = router;
 
   useEffect(() => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
       const isLoggedIn = !!data.session;
-      const isLanding = router.pathname === '/landing' || router.pathname === '/login' || router.pathname === '/signup';
+      const isLanding = pathname === '/landing' || pathname === '/login' || pathname === '/signup';
 
       if (!isLoggedIn && !isLanding) {
         router.replace('/landing');
@@ -20,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
     };
 
     checkSession();
-  }, [router.pathname]);
+  }, [pathname, router]);
 
   return (
     <SessionContextProvider supabaseClient={supabase}>

@@ -21,7 +21,7 @@ export default function TaskGroup6({ activeGroup, setActiveGroup }: Props) {
       prev.map(task =>
         task.id === id ? { ...task, completed: !task.completed } : task
       )
-    );[]
+    );
   };
 
   const renderExtras = (task: Task) => {

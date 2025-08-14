@@ -6,27 +6,28 @@ import { supabase } from '@/lib/supabaseClient';
 export default function SignUpPage() {
   const router = useRouter();
 
+  // Check session on mount
   useEffect(() => {
-  const checkSession = async () => {
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
-      const { data: profile } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', data.session.user.id)
-        .single();
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
 
-      if (profile) {
-        router.replace('/');
-      } else {
-        router.replace('/signup-details');
+      if (data.session) {
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('*')
+          .eq('id', data.session.user.id)
+          .single();
+
+        if (profile) {
+          router.replace('/');
+        } else {
+          router.replace('/signup-details');
+        }
       }
-    }
-  };
+    };
 
-  checkSession();
-}, []);
-
+    checkSession();
+  }, [router]); // router included in dependency array
 
   const [form, setForm] = useState({
     email: '',
@@ -43,24 +44,32 @@ export default function SignUpPage() {
     e.preventDefault();
     setError('');
 
-    const { data, error } = await supabase.auth.signUp({
-      email: form.email,
-      password: form.password,
-    });
+    try {
+      const { data, error: signUpError } = await supabase.auth.signUp({
+        email: form.email,
+        password: form.password,
+      });
 
-    if (error) {
-      setError(error.message);
-      return;
+      if (signUpError) {
+        setError(signUpError.message);
+        return;
+      }
+
+      const userId = data.user?.id;
+
+      if (!userId) {
+        setError('Failed to retrieve user ID.');
+        return;
+      }
+
+      router.push(`/signup-details?userId=${userId}`);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
     }
-
-    const userId = data.user?.id;
-
-    if (!userId) {
-      setError('Failed to retrieve user ID.');
-      return;
-    }
-
-    router.push(`/signup-details?userId=${userId}`);
   };
 
   return (
@@ -88,7 +97,10 @@ export default function SignUpPage() {
           required
         />
 
-        <button type="submit" className="w-full bg-pink-600 text-white p-2 rounded hover:bg-pink-700">
+        <button
+          type="submit"
+          className="w-full bg-pink-600 text-white p-2 rounded hover:bg-pink-700 transition"
+        >
           Continue
         </button>
 

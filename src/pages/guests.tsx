@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import H1 from '../components/Heading1';
@@ -16,34 +16,38 @@ const Guests = () => {
   const [editGuest, setEditGuest] = useState<Guest | null>(null);
   const [toast, setToast] = useState('');
 
-  useEffect(() => {
-    if (user) {
-      fetchGuests();
-    }
-  }, [user]);
+  const fetchGuests = useCallback(async () => {
+    if (!user) return;
 
-  const fetchGuests = async () => {
     const { data, error } = await supabase
       .from('guests')
       .select('*')
-      .eq('user_id', user?.id)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 
     if (data) setGuests(data);
     if (error) console.error('Fetch guests error:', error.message);
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchGuests();
+  }, [fetchGuests]);
 
   const handleAddGuest = async (guest: Guest) => {
+    if (!user) return;
+
     const { error } = await supabase.from('guests').insert([
       {
         ...guest,
-        user_id: user?.id,
+        user_id: user.id,
       },
     ]);
+
     if (!error) {
       setToast('Guest added!');
       fetchGuests();
     }
+
     setShowForm(false);
     setTimeout(() => setToast(''), 3000);
   };
@@ -71,10 +75,12 @@ const Guests = () => {
 
   const handleRemoveGuest = async (id: string) => {
     const { error } = await supabase.from('guests').delete().eq('id', id);
+
     if (!error) {
       setToast('Guest removed!');
       fetchGuests();
     }
+
     setTimeout(() => setToast(''), 3000);
   };
   

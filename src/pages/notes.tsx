@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabaseClient';
 import { useUser } from '@supabase/auth-helpers-react';
@@ -19,15 +19,13 @@ const NotesPage = () => {
   const router = useRouter();
   const [notes, setNotes] = useState<Note[]>([]);
 
-  useEffect(() => {
-    if (user) fetchNotes();
-  }, [user]);
+  const fetchNotes = useCallback(async () => {
+    if (!user) return;
 
-  const fetchNotes = async () => {
     const { data, error } = await supabase
       .from('notes')
       .select('*')
-      .eq('user_id', user?.id)
+      .eq('user_id', user.id)
       .order('created_at', { ascending: false });
 
     if (!error && data) {
@@ -35,7 +33,11 @@ const NotesPage = () => {
     } else {
       console.error('Error fetching notes:', error);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchNotes();
+  }, [fetchNotes]);
 
   const handleAddNote = () => {
     router.push('/create-note');
@@ -43,7 +45,6 @@ const NotesPage = () => {
 
   return (
     <div className="relative p-8 min-h-screen bg-white">
-      
       <button
         onClick={() => router.push('/')}
         className="absolute top-6 left-6 p-2 rounded-full hover:bg-gray-200"
