@@ -51,23 +51,30 @@ export default function SignUpStepTwo() {
 
       console.log('Profile created:', response.data);
       router.push('/');
-    } catch (err: any) {
-      console.error('Failed to create user profile:', err);
-      setError(err.response?.data?.detail || 'Failed to create profile');
+    } catch (err: unknown) {
+      // Type-safe error handling
+      if (axios.isAxiosError(err)) {
+        console.error('Axios error:', err.response?.data);
+        setError(err.response?.data?.detail || 'Failed to create profile');
+      } else if (err instanceof Error) {
+        console.error('Error:', err.message);
+        setError(err.message);
+      } else {
+        console.error('Unknown error:', err);
+        setError('Failed to create profile');
+      }
     }
   };
 
   return (
     <section className='w-full md:h-screen px-[3%] flex items-center justify-center'>
-
       <div className='flex flex-col-reverse md:flex-row w-full max-w-6xl items-center justify-between'>
-        
         <div className='w-full md:w-1/3 h-[50vh] md:h-[100vh] relative'>
           <Image 
             src="/images/bouquet.png"
             alt="Background image"
             fill
-            style={{ objectFit: "contain", objectPosition: "center "}}
+            style={{ objectFit: "contain", objectPosition: "center " }}
           />
         </div>
 
