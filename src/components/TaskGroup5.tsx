@@ -38,6 +38,7 @@ export default function TaskGroup5({ activeGroup, setActiveGroup }: Props) {
             <>
                 <p>Have a make-up and hair trial and book your appointment for the day.</p>
                 <a href='/make-up'>Beauty tips</a>
+                <a href='/vendors/beauticians'>Find a beautician.</a>
             </>
         )
     }

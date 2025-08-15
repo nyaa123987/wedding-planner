@@ -27,7 +27,7 @@ export default function TaskGroup4({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>Purchase your ring cushion if you are going to have ring bearer.</p>
-                <a href='/rings'>Discover beautiful ring designs</a>
+                <a href='/vendors/jewelry'>Discover jewelry vendors.</a>
             </>
         )
     }

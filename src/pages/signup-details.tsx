@@ -100,6 +100,7 @@ export default function SignUpStepTwo() {
               <option value="">Select Gender</option>
               <option value="bride">Bride</option>
               <option value="groom">Groom</option>
+              <option value="none">None</option>
             </select>
 
             <input

@@ -6,7 +6,6 @@ import { supabase } from '@/lib/supabaseClient';
 export default function SignUpPage() {
   const router = useRouter();
 
-  // Check session on mount
   useEffect(() => {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -27,7 +26,7 @@ export default function SignUpPage() {
     };
 
     checkSession();
-  }, [router]); // router included in dependency array
+  }, [router]);
 
   const [form, setForm] = useState({
     email: '',
@@ -75,7 +74,7 @@ export default function SignUpPage() {
   return (
     <div className="min-h-screen bg-pink-50 flex items-center justify-center">
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-md w-full max-w-md space-y-4">
-        <h2 className="text-2xl font-bold text-center text-pink-600">Create an Account</h2>
+        <h2 className="text-2xl font-bold text-center text-black">Create an Account</h2>
 
         <input
           name="email"
@@ -99,7 +98,7 @@ export default function SignUpPage() {
 
         <button
           type="submit"
-          className="w-full bg-pink-600 text-white p-2 rounded hover:bg-pink-700 transition"
+          className="transition w-full bg-black text-white p-2 rounded hover:bg-white hover:text-black shadow-md focus:outline-none focus:ring-2 focus:ring-[#CCCCCC] hover:cursor-pointer"
         >
           Continue
         </button>

@@ -30,8 +30,8 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>If you are going to make your own invitations, then choose your paper and start making them, as this will take longer than ordering them through a printer.</p>
-                <a href='/invitations'>See invitation card designs</a>
-                <a href='/invitation-card-vendors'>See invitation card vendors</a>
+                <a href='/invitation-card'>See invitation card designs</a>
+                <a href='/vendors/invitations'>See invitation card vendors</a>
             </>
         )
     }
@@ -40,7 +40,7 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
             <>
                 <p>For the bride: Find a reautable dressmaker or store to design or buy your dress, as well as your bridesmaids&apos; dresses.</p>
                 <a href='/dresses'>See beautiful designs</a>
-                <a href='/dressmakers'>Need a dressmaker vendor?</a>
+                <a href='/vendors/bridal-wear'>Need a dressmaker vendor?</a>
             </>
         )
     }
@@ -49,7 +49,7 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
             <>
                 <p>For the groom: Find a reputable dressmaker or store to design or buy your suit.</p>
                 <a href='/suits'>See designs</a>
-                <a href='/dressmakers'>Need a dressmaker vendor?</a>
+                <a href='/vendors/groom-wear'>Need a dressmaker vendor?</a>
             </>
         )
     }
@@ -58,7 +58,7 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
             <>
                 <p>For the bride: Be smart when choosing your shoes and make sure you get comfortable ones and break them in, the last thing you need are blisters on your wedding day.</p>
                 <a href='/shoes'>See beautiful designs</a>
-                <a href='/dressmakers'>Need a dressmaker vendor?</a>
+                <a href='/vendor/bridal-shoes'>Need a dressmaker vendor?</a>
             </>
         )
     }
@@ -66,7 +66,7 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <a href='/shoes'>See designs</a>
-                <a href='/dressmakers'>Need a dressmaker vendor?</a>
+                <a href='/vendors/groom-shoes'>Need a dressmaker vendor?</a>
             </>
         )
     }

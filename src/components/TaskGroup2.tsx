@@ -50,8 +50,8 @@ export default function TaskGroup2({ activeGroup, setActiveGroup }: Props) {
         return (
             <div className='flex flex-col'>
                 <p>Choose and book your photographer and videographer, but remember to see their portfolios - they are only as good as the work they produce.</p>
-                <a className='text-[blue] hover:underline pt-[2vh]' href='/photographers'>See photographer vendors</a>
-                <a className='text-[blue] hover:underline pt-[2vh]' href='/videographers'>See videographer vendors</a>
+                <a className='text-[blue] hover:underline pt-[2vh]' href='/vendors/photographers'>See photographer vendors</a>
+                <a className='text-[blue] hover:underline pt-[2vh]' href='/vendors/videographers'>See videographer vendors</a>
             </div>
         )
     }
@@ -59,7 +59,7 @@ export default function TaskGroup2({ activeGroup, setActiveGroup }: Props) {
         return (
             <div className='flex flex-col'>
                 <p>If the venue you hire does not do the catering, make sure you select and book one.</p>
-                <a className='text-[blue] hover:underline pt-[2vh]' href='/caterers'>See catering vendors</a>
+                <a className='text-[blue] hover:underline pt-[2vh]' href='/vendors/caterers'>See catering vendors</a>
                 <a className='text-[blue] hover:underline pt-[2vh]' href='/menu'>Need help planning the menu?</a>
             </div>
         )
@@ -73,7 +73,7 @@ export default function TaskGroup2({ activeGroup, setActiveGroup }: Props) {
                     <li className="flex items-start"><span className="text-black mx-2 mt-0.5">➤</span><span className="italic">Inform your baker of the colour scheme of your wedding so that the cake ties in with the theme.</span></li>
                     <li className="flex items-start"><span className="text-black mx-2 mt-0.5">➤</span><span className="italic">Make sure to check if your baker delivers - if not, organise for a friend or family member to collect the cake on the day of the wedding.</span></li>
                 </ul>
-                <a className='text-[blue] hover:underline pt-[2vh]' href='/cake-vendor'>Find a cake vendor</a>
+                <a className='text-[blue] hover:underline pt-[2vh]' href='/vendors/cake-designers'>Find a cake vendor</a>
                 <a className='text-[blue] hover:underline pt-[2vh]' href='/cakes'>Browse cake designs</a>
             </div>
         )
@@ -81,8 +81,7 @@ export default function TaskGroup2({ activeGroup, setActiveGroup }: Props) {
     if (task.id === 7) {
         return (
             <div className='flex flex-col'>
-                <a className='text-[blue] hover:underline pt-[2vh]' href='/florists'>See florist vendors</a>
-                <a className='text-[blue] hover:underline pt-[2vh]' href='/decorators'>See decorator vendors</a>
+                <a className='text-[blue] hover:underline pt-[2vh]' href='/vendors/florists'>See florist vendors</a>
                 <a className='text-[blue] hover:underline pt-[2vh]' href='/decorations'>Need some inspiration?</a>
             </div>
         )

@@ -31,7 +31,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-pink-50 flex items-center justify-center">
       <form onSubmit={handleLogin} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-4">
-        <h2 className="text-2xl font-bold text-center text-pink-700">Login</h2>
+        <h2 className="text-2xl font-bold text-center text-black">Login</h2>
 
         <input
           name="email"
@@ -53,7 +53,7 @@ export default function LoginPage() {
           required
         />
 
-        <button type="submit" className="w-full bg-pink-600 text-white p-2 rounded hover:bg-pink-700">
+        <button type="submit" className="transition w-full bg-black text-white p-2 rounded hover:bg-white hover:text-black shadow-md focus:outline-none focus:ring-2 focus:ring-[#CCCCCC] hover:cursor-pointer">
           Login
         </button>
 

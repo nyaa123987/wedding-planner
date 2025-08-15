@@ -34,7 +34,7 @@ def get_profiles():
 @app.post("/add-profile")
 def add_user_profile(profile: UserProfile):
     response = supabase.table("user_profiles").insert({
-        "user_id": profile.user_id,
+        "id": profile.user_id,
         "age": profile.age,
         "gender": profile.gender,
         "city": profile.city,
