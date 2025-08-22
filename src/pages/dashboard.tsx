@@ -110,7 +110,7 @@ const Hero = () => {
       <div className="flex justify-center align-middle gap-[5%] bg-[#E6D3C6] py-[2vh] mt-[5vh]">
         <Link href="/guests">Guests</Link>
         <Link href="/schedule">Schedule</Link>
-        <Link href="/people">Vendors</Link>
+        <Link href="/vendors">Vendors</Link>
       </div>
     </main>
   );

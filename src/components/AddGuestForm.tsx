@@ -22,14 +22,17 @@ const AddGuestForm = ({ onClose, onSubmit, isEditMode = false, initialGuest }: A
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, email });
-    
+
     if (!name.trim()) {
       setError('Please enter at least the name of the guest.');
       return;
     }
-    onSubmit({ name: name.trim(), email: email.trim() || undefined });
+
     setError('');
+    onSubmit({
+      name: name.trim(),
+      email: email.trim() || undefined,
+    });
   };
 
   return (
@@ -52,7 +55,10 @@ const AddGuestForm = ({ onClose, onSubmit, isEditMode = false, initialGuest }: A
           className="border w-full p-2 mb-2 rounded"
         />
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        <button onClick={handleSubmit} className="bg-green-500 text-white px-4 py-2 rounded w-full">
+        <button
+          onClick={handleSubmit}
+          className="bg-green-500 text-white px-4 py-2 rounded w-full"
+        >
           {isEditMode ? 'Save' : 'Add'}
         </button>
       </div>

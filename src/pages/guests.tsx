@@ -16,7 +16,7 @@ const Guests = () => {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    const getUser = async () => {
+    const getUser = async () => { 
       const {
         data: { user },
         error,
