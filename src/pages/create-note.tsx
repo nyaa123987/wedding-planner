@@ -8,7 +8,6 @@ import { ArrowLeft } from 'lucide-react';
 const CreateNotePage = () => {
   const router = useRouter();
   const supabase = useSupabaseClient();
-  const session = useSession();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
