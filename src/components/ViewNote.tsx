@@ -12,9 +12,10 @@ type Note = {
 type ViewNoteProps = {
   note: Note;
   onClose: () => void;
+  onSave: () => void;
 };
 
-const ViewNote = ({ note, onClose }: ViewNoteProps) => {
+const ViewNote = ({ note, onClose, onSave }: ViewNoteProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content);
@@ -26,6 +27,20 @@ const ViewNote = ({ note, onClose }: ViewNoteProps) => {
       .eq('id', note.id);
 
     setIsEditing(false);
+    onSave();
+  };
+
+  const handleDelete = async () => {
+    const confirm = window.confirm('Are you sure you want to delete this note?');
+    if (!confirm) return;
+
+    await supabase
+      .from('notes')
+      .delete()
+      .eq('id', note.id);
+
+    onSave();
+    onClose();
   };
 
   return (
@@ -85,12 +100,20 @@ const ViewNote = ({ note, onClose }: ViewNoteProps) => {
             </button>
           </>
         ) : (
-          <button
-            onClick={() => setIsEditing(true)}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Edit
-          </button>
+          <>
+            <button
+              onClick={() => setIsEditing(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            >
+              Edit
+            </button>
+            <button
+              onClick={handleDelete}
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            >
+              Delete
+            </button>
+          </>
         )}
       </div>
     </div>

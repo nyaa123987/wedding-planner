@@ -1,68 +1,50 @@
 'use client';
-import { useState, useEffect } from 'react';
+
+import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { supabase } from '@/lib/supabaseClient';
-import axios from 'axios';
-import Image from "next/image";
+import { useUser } from '@clerk/nextjs';
+import { supabase } from '../lib/supabaseClient';
+import Image from 'next/image';
 
 export default function SignUpStepTwo() {
   const router = useRouter();
+  const { isLoaded, isSignedIn, user } = useUser();
 
   const [age, setAge] = useState<number | undefined>();
-  const [gender, setGender] = useState<string>('');
-  const [city, setCity] = useState<string>('');
-  const [wedding_date, setWeddingDate] = useState<string>('');
+  const [gender, setGender] = useState('');
+  const [city, setCity] = useState('');
+  const [wedding_date, setWeddingDate] = useState('');
   const [budget, setBudget] = useState<number | undefined>();
 
   const [error, setError] = useState('');
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data?.user?.id) {
-        setUserId(data.user.id);
-      } else {
-        setError('User not authenticated. Please log in again.');
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   const submitUserDetails = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (!userId) {
-      setError('User ID not found.');
+    if (!isLoaded || !isSignedIn || !user) {
+      setError('User not authenticated. Please log in again.');
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/add-profile', {
-        user_id: userId,
-        age,
-        gender,
-        city,
-        wedding_date,
-        budget,
-      });
+      const { error: supabaseError } = await supabase.from('profiles').insert([
+        {
+          user_id: user.id,
+          age,
+          gender,
+          city,
+          wedding_date,
+          budget,
+        },
+      ]);
 
-      console.log('Profile created:', response.data);
+      if (supabaseError) throw supabaseError;
+
       router.push('/');
-    } catch (err: unknown) {
-      // Type-safe error handling
-      if (axios.isAxiosError(err)) {
-        console.error('Axios error:', err.response?.data);
-        setError(err.response?.data?.detail || 'Failed to create profile');
-      } else if (err instanceof Error) {
-        console.error('Error:', err.message);
-        setError(err.message);
-      } else {
-        console.error('Unknown error:', err);
-        setError('Failed to create profile');
-      }
+    } catch (err: any) {
+      console.error('Supabase error:', err.message);
+      setError(err.message || 'Failed to create profile');
     }
   };
 
@@ -70,7 +52,7 @@ export default function SignUpStepTwo() {
     <section className='w-full md:h-screen px-[3%] flex items-center justify-center'>
       <div className='flex flex-col-reverse md:flex-row w-full max-w-6xl items-center justify-between'>
         <div className='w-full md:w-1/3 h-[50vh] md:h-[100vh] relative'>
-          <Image 
+          <Image
             src="/images/bouquet.png"
             alt="Background image"
             fill
@@ -129,7 +111,10 @@ export default function SignUpStepTwo() {
               required
             />
 
-            <button type="submit" className="transition w-full bg-black text-white p-2 rounded hover:bg-white hover:text-black shadow-md focus:outline-none focus:ring-2 focus:ring-[#CCCCCC] hover:cursor-pointer">
+            <button
+              type="submit"
+              className="transition w-full bg-black text-white p-2 rounded hover:bg-white hover:text-black shadow-md focus:outline-none focus:ring-2 focus:ring-[#CCCCCC] hover:cursor-pointer"
+            >
               Finish
             </button>
 

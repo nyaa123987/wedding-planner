@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabaseClient';
-import { useUser } from '@supabase/auth-helpers-react';
+import { useUser } from '@clerk/nextjs'; // ✅ Clerk instead of Supabase
 import { ArrowLeft } from 'lucide-react';
 
 const CreateNotePage = () => {
   const router = useRouter();
-  const user = useUser();
+  const { user } = useUser(); // Clerk user object
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -30,7 +30,7 @@ const CreateNotePage = () => {
         {
           title,
           content,
-          user_id: user.id,
+          user_id: user.id, // Clerk user id stored in Supabase
         },
       ]);
 
@@ -38,21 +38,19 @@ const CreateNotePage = () => {
 
     if (!error) {
       console.log('Insert success:', data);
-      router.push('/notes'); // Go back to notes page
+      router.push('/notes');
     } else {
       console.error('Insert error:', error);
       alert('Error saving note');
     }
   };
 
-  // Delay rendering until user is loaded
   if (!user) {
     return <div className="p-6 text-center">Loading...</div>;
   }
 
   return (
     <div className="relative min-h-screen p-6 bg-white">
-      {/* Back button */}
       <button
         onClick={() => router.push('/notes')}
         className="absolute top-6 left-6 p-2 rounded-full hover:bg-gray-200"

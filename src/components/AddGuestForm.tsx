@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Guest } from '../../types/guest';
+import { Guest } from '../types/guest';
 
 type AddGuestFormProps = {
   onClose: () => void;

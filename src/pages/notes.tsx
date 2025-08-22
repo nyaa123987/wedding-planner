@@ -1,10 +1,10 @@
-import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { supabase } from '../lib/supabaseClient';
-import { useUser } from '@supabase/auth-helpers-react';
-import NoteCard from '../components/NoteCard';
-import { Plus, ArrowLeft } from 'lucide-react';
-import H1 from '../components/Heading1';
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/router";
+import { useUser } from "@clerk/nextjs";
+import { supabase } from "../lib/supabaseClient";
+import NoteCard from "../components/NoteCard";
+import { Plus, ArrowLeft } from "lucide-react";
+import H1 from "../components/Heading1";
 
 type Note = {
   id: string;
@@ -15,7 +15,7 @@ type Note = {
 };
 
 const NotesPage = () => {
-  const user = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const [notes, setNotes] = useState<Note[]>([]);
 
@@ -23,15 +23,15 @@ const NotesPage = () => {
     if (!user) return;
 
     const { data, error } = await supabase
-      .from('notes')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('created_at', { ascending: false });
+      .from("notes")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
 
     if (!error && data) {
       setNotes(data as Note[]);
     } else {
-      console.error('Error fetching notes:', error);
+      console.error("Error fetching notes:", error);
     }
   }, [user]);
 
@@ -40,13 +40,13 @@ const NotesPage = () => {
   }, [fetchNotes]);
 
   const handleAddNote = () => {
-    router.push('/create-note');
+    router.push("/create-note");
   };
 
   return (
     <div className="relative p-8 min-h-screen bg-white">
       <button
-        onClick={() => router.push('/')}
+        onClick={() => router.push("/")}
         className="absolute top-6 left-6 p-2 rounded-full hover:bg-gray-200"
       >
         <ArrowLeft className="w-6 h-6" />

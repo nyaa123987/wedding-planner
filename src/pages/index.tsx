@@ -1,111 +1,125 @@
-import { useUser } from '@supabase/auth-helpers-react';
-import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabaseClient';
-import { FileText, Bell, UserRound } from "lucide-react";
-import Link from 'next/link';
-import H1 from '../components/Heading1';
+'use client';
 
-const Hero = () => {
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { supabase } from "../lib/supabaseClient";
+import { motion } from "framer-motion";
 
-  const user = useUser();
-  const [daysLeft, setDaysLeft] = useState<number | null>(null);
-  const [isPast, setIsPast] = useState(false);
+export default function LandingPage() {
+  const router = useRouter();
 
   useEffect(() => {
-    const fetchWeddingDate = async () => {
-      if (!user) return;
+    const checkUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-      const { data, error } = await supabase 
-        .from('user_profiles')
-        .select('wedding_date')
-        .eq('id', user.id)
-        .single();
-      
-      if (error) {
-        console.error('Error fetching wedding date:', error);
-        return;
-      }
-
-      const today = new Date();
-      const weddingDate = new Date(data.wedding_date);
-
-      const timeDiff = weddingDate.getTime() - today.getTime();
-      const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-
-      if (days <= 0) {
-        setIsPast(true);
-      } else {
-        setDaysLeft(days);
+      if (user) {
+        router.push("/dashboard");
       }
     };
+    checkUser();
+  }, [router]);
 
-    fetchWeddingDate();
-  }, [user]);
+  return (
+    <div className="relative bg-white text-gray-800">
+      <section
+        className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 bg-cover bg-bottom"
+        style={{ backgroundImage: "url('/images/landing-hero.jpg')" }}
+      >
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="relative z-10 text-5xl md:text-6xl font-serif text-gray-900 max-w-3xl leading-tight"
+        >
+          Plan Your Perfect Wedding Day
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.7 }}
+          className="relative z-10 mt-6 text-lg text-gray-600 max-w-xl"
+        >
+          Your love story deserves a celebration as beautiful as the journey itself. Let&apos;s make it unforgettable.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.7 }}
+          className="relative z-10 mt-8 space-x-4"
+        >
+          <button
+            onClick={() => router.push("/auth")}
+            className="px-4 py-2 bg-white text-black rounded border transition hover:bg-black hover:text-white hover:cursor-pointer active:opacity-[50%]"
+          >
+            Sign Up
+            </button>
+        
+          <button
+            onClick={() => router.push("/auth")}
+            className="px-4 py-2 bg-black text-white rounded hover:bg-white hover:text-black transition border hover:cursor-pointer active:opacity-[50%]"
+          >
+            Login
+          </button>
+        </motion.div>
+      </section>
 
-  return(
-    <main
-      className="w-full h-[100vh] flex flex-col justify-between"
-      style={{
-        background: "radial-gradient(circle, #EEEDDB 40%, #E3D3B9 100%)"
-      }}
-    >
-      <div className="flex justify-between bg-[#E6D3C6] py-[2vh] px-[3%]">
-        <H1>Ever After</H1>
-
-        <div className="flex gap-8">
-          <Link href="/reminders" aria-label="Notifications">
-            <Bell className="w-6 h-6 hover:text-[#A47148] cursor-pointer" />
-          </Link>
-
-          <Link href="/notes" aria-label="Notifications">
-            <FileText className="w-6 h-6 hover:text-[#A47148] cursor-pointer" />
-          </Link>
-
-          <Link href="/account" aria-label="Notifications">
-            <UserRound className="w-6 h-6 hover:text-[#A47148] cursor-pointer" />
-          </Link>
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <img
+              src="/images/black-couple.jpeg"
+              alt="Wedding couple"
+              className="h-[70vh] rounded-2xl shadow-lg"
+            />
+          </div>
+          <div>
+            <h2 className="text-4xl font-serif mb-4 text-gray-900">
+              Crafting Memories, One Detail at a Time
+            </h2>
+            <p className="text-gray-600 leading-relaxed">
+              We believe every wedding should reflect the couple&apos;s unique personality and story.
+              Our team takes care of every detail, so you can focus on what matters most — each other.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="w-3/4 h-5 mx-auto mt-12 md:my-6 rounded-3xl border-[#E4B441] border-2">
-        <div className="bg-[#E4B441] border-[#E4B441] border-2 h-4 rounded-3xl" style={{ width: "70%" }}></div>
-      </div>
+      <section className="py-20 px-6 bg-pink-50">
+        <div className="max-w-6xl mx-auto text-center">
+          <h2 className="text-4xl font-serif mb-12 text-gray-900">
+            What We Offer
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: "Venue Selection", desc: "Find the perfect setting for your day." },
+              { title: "Decoration & Styling", desc: "Elegant designs tailored to your theme." },
+              { title: "Guest Management", desc: "We make sure everyone feels welcome." },
+            ].map((service, index) => (
+              <div key={index} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+                <h3 className="text-2xl font-serif mb-3">{service.title}</h3>
+                <p className="text-gray-600">{service.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <div className="relative w-[100%] h-[60vh] flex items-center justify-center"
-        style={{
-          backgroundImage: "url('/images/hero-image.png')",
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          imageRendering: "auto",
-        }}>
-          <h1 className="tangerine text-5xl pb-[15vh] text-center">
-            {isPast ? (
-              'Congratulations! You are already married.'
-            ) : daysLeft !== null ? (
-              <>
-                <span className="text-8xl">{daysLeft}</span>
-                <br />
-                days left
-              </>
-            ) : (
-              'Loading...'
-            )}
-          </h1>    
-      </div>
-      
-      <div className="flex justify-center cursor-pointer">
-        <h1 className="tangerine text-3xl md:text-5xl text-center border-2 border-[#E4B441] p-2 shine-border-bg">Today&apos;s Task</h1>
-      </div>
-
-      <div className="flex justify-center align-middle gap-[5%] bg-[#E6D3C6] py-[2vh] mt-[5vh]">
-        <Link href="/guests">Guests</Link>
-        <Link href="/schedule">Schedule</Link>
-        <Link href="/people">Vendors</Link>
-      </div>
-      
-    </main>
-  )
+      <section className="py-20 px-6 bg-white text-center">
+        <h2 className="text-4xl font-serif mb-6 text-gray-900">
+          Let&apos;s Begin Your Journey
+        </h2>
+        <p className="text-gray-600 max-w-xl mx-auto mb-8">
+          From the first “yes” to the final “I do,” we&apos;ll be with you every step of the way.
+        </p>
+        <button
+          onClick={() => router.push("/auth")}
+          className="px-4 py-2 bg-black text-white rounded hover:bg-white hover:text-black transition border hover:cursor-pointer active:opacity-[50%]"
+        >
+          Get Started
+        </button>
+      </section>
+    </div>
+  );
 }
-
-export default Hero;

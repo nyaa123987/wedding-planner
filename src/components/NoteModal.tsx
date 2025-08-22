@@ -29,7 +29,7 @@ const NoteModal = ({ onClose, onSave }: NoteModalProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-white z-50 p-4">
+    <div className="fixed inset-0 bg-white z-50 p-6 flex flex-col items-center justify-center">
       <input
         type="text"
         placeholder="Title"
@@ -43,12 +43,20 @@ const NoteModal = ({ onClose, onSave }: NoteModalProps) => {
         onChange={(e) => setContent(e.target.value)}
         className="w-full p-2 h-60 bg-gray-100 rounded resize-y"
       />
-      <button
-        onClick={handleSubmit}
-        className="mt-4 bg-green-500 text-white px-6 py-2 rounded"
-      >
-        Done
-      </button>
+      <div className="flex gap-4 mt-4">
+        <button
+          onClick={handleSubmit}
+          className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600"
+        >
+          Save
+        </button>
+        <button
+          onClick={onClose}
+          className="bg-gray-300 px-6 py-2 rounded hover:bg-gray-400"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
 };
