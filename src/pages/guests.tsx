@@ -7,39 +7,52 @@ import GuestItem from '../components/GuestItem';
 import Toast from '../components/Toast';
 import { Guest } from '../types/guest';
 import { supabase } from '../lib/supabaseClient';
-import { useUser } from '@clerk/nextjs';
 
 const Guests = () => {
-  const { user } = useUser();
   const [guests, setGuests] = useState<Guest[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editGuest, setEditGuest] = useState<Guest | null>(null);
   const [toast, setToast] = useState('');
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      if (error) console.error('Error fetching user:', error.message);
+      if (user) setUserId(user.id);
+    };
+
+    getUser();
+  }, []);
 
   const fetchGuests = useCallback(async () => {
-    if (!user) return;
+    if (!userId) return;
 
     const { data, error } = await supabase
       .from('guests')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .order('created_at', { ascending: false });
 
     if (data) setGuests(data);
     if (error) console.error('Fetch guests error:', error.message);
-  }, [user]);
+  }, [userId]);
 
   useEffect(() => {
     fetchGuests();
   }, [fetchGuests]);
 
   const handleAddGuest = async (guest: Guest) => {
-    if (!user) return;
+    if (!userId) return;
 
     const { error } = await supabase.from('guests').insert([
       {
         ...guest,
-        user_id: user.id,
+        user_id: userId,
       },
     ]);
 

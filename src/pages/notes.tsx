@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
-import { useUser } from "@clerk/nextjs";
 import { supabase } from "../lib/supabaseClient";
 import NoteCard from "../components/NoteCard";
 import { Plus, ArrowLeft } from "lucide-react";
@@ -15,17 +14,17 @@ type Note = {
 };
 
 const NotesPage = () => {
-  const { user } = useUser();
   const router = useRouter();
   const [notes, setNotes] = useState<Note[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const fetchNotes = useCallback(async () => {
-    if (!user) return;
+    if (!userId) return;
 
     const { data, error } = await supabase
       .from("notes")
       .select("*")
-      .eq("user_id", user.id)
+      .eq("user_id", userId)
       .order("created_at", { ascending: false });
 
     if (!error && data) {
@@ -33,7 +32,19 @@ const NotesPage = () => {
     } else {
       console.error("Error fetching notes:", error);
     }
-  }, [user]);
+  }, [userId]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error || !data.user) {
+        router.push("/auth");
+        return;
+      }
+      setUserId(data.user.id);
+    };
+    getUser();
+  }, [router]);
 
   useEffect(() => {
     fetchNotes();
