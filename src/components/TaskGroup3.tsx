@@ -1,5 +1,6 @@
 import TaskGroup, { Task } from './TaskGroup';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface Props {
   activeGroup: string | null;
@@ -30,8 +31,8 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>If you are going to make your own invitations, then choose your paper and start making them, as this will take longer than ordering them through a printer.</p>
-                <a href='/invitation-card'>See invitation card designs</a>
-                <a href='/vendors/invitations'>See invitation card vendors</a>
+                <Link href='/invitation-card'>See invitation card designs</Link>
+                <Link href='/vendors/invitations'>See invitation card vendors</Link>
             </>
         )
     }
@@ -39,8 +40,8 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>For the bride: Find a reautable dressmaker or store to design or buy your dress, as well as your bridesmaids&apos; dresses.</p>
-                <a href='/dresses'>See beautiful designs</a>
-                <a href='/vendors/bridal-wear'>Need a dressmaker vendor?</a>
+                <Link href='/dresses'>See beautiful designs</Link>
+                <Link href='/vendors/bridal-wear'>Need a dressmaker vendor?</Link>
             </>
         )
     }
@@ -48,8 +49,8 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>For the groom: Find a reputable dressmaker or store to design or buy your suit.</p>
-                <a href='/suits'>See designs</a>
-                <a href='/vendors/groom-wear'>Need a dressmaker vendor?</a>
+                <Link href='/suits'>See designs</Link>
+                <Link href='/vendors/groom-wear'>Need a dressmaker vendor?</Link>
             </>
         )
     }
@@ -57,16 +58,16 @@ export default function TaskGroup3({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>For the bride: Be smart when choosing your shoes and make sure you get comfortable ones and break them in, the last thing you need are blisters on your wedding day.</p>
-                <a href='/shoes'>See beautiful designs</a>
-                <a href='/vendor/bridal-shoes'>Need a dressmaker vendor?</a>
+                <Link href='/shoes'>See beautiful designs</Link>
+                <Link href='/vendor/bridal-shoes'>Need a dressmaker vendor?</Link>
             </>
         )
     }
     if (task.id === 7) {
         return (
             <>
-                <a href='/shoes'>See designs</a>
-                <a href='/vendors/groom-shoes'>Need a dressmaker vendor?</a>
+                <Link href='/shoes'>See designs</Link>
+                <Link href='/vendors/groom-shoes'>Need a dressmaker vendor?</Link>
             </>
         )
     }

@@ -1,5 +1,6 @@
 import TaskGroup, { Task } from './TaskGroup';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface Props {
   activeGroup: string | null;
@@ -27,7 +28,7 @@ export default function TaskGroup4({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>Purchase your ring cushion if you are going to have ring bearer.</p>
-                <a href='/vendors/jewelry'>Discover jewelry vendors.</a>
+                <Link href='/vendors/jewelry'>Discover jewelry vendors.</Link>
             </>
         )
     }
@@ -35,14 +36,14 @@ export default function TaskGroup4({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>Arrange your transportation to and from the ceremony.</p>
-                <a href='/transportation'>Transportation tips</a>
+                <Link href='/transportation'>Transportation tips</Link>
             </>
         )
     }
     if (task.id === 4) {
         return (
             <>
-                <a href='/invitation-mailing'>Did you know?</a>
+                <Link href='/invitation-mailing'>Did you know?</Link>
             </>
         )
     }

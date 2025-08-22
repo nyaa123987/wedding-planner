@@ -51,7 +51,7 @@ export default function TaskGroup1({ activeGroup, setActiveGroup }: Props) {
                 <li className="flex items-start"><span className="text-black mx-2 mt-0.5">➤</span><span className="italic">Tell them ideas you may already have and see what kind of creative input and suggestions they may have to add to your ideas.</span></li>
                 <li className="flex items-start"><span className="text-black mx-2 mt-0.5">➤</span><span className="italic">Make sure you find out their fee prior to booking, and include this in your budget.</span></li>
             </ul>
-            <a className='text-[blue] hover:underline pt-[2vh]' href='/vendors/wedding-planners'>Browse available vendors</a>
+            <Link className='text-[blue] hover:underline pt-[2vh]' href='/vendors/wedding-planners'>Browse available vendors</Link>
         </div>
       )
     }
@@ -59,7 +59,7 @@ export default function TaskGroup1({ activeGroup, setActiveGroup }: Props) {
         return (
             <div className='flex flex-col'>
                 <p>Shop around for your reception venue and reserve the one you like. Choose your location for the wedding ceremony.</p>
-                <a className='text-[blue] hover:underline pt-[2vh]' href='/vendors/venues'>Possible venues</a>
+                <Link className='text-[blue] hover:underline pt-[2vh]' href='/vendors/venues'>Possible venues</Link>
             </div>
         )
     }

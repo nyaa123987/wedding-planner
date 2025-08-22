@@ -1,5 +1,6 @@
 import TaskGroup, { Task } from './TaskGroup';
 import { useState } from 'react';
+import Link from 'next/link';
 
 interface Props {
   activeGroup: string | null;
@@ -29,7 +30,7 @@ export default function TaskGroup5({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>Schedule your beauty and body treatments.</p>
-                <a href='/beauty'>Tips and tricks</a>
+                <Link href='/beauty'>Tips and tricks</Link>
             </>
         )
     }
@@ -37,8 +38,8 @@ export default function TaskGroup5({ activeGroup, setActiveGroup }: Props) {
         return (
             <>
                 <p>Have a make-up and hair trial and book your appointment for the day.</p>
-                <a href='/make-up'>Beauty tips</a>
-                <a href='/vendors/beauticians'>Find a beautician.</a>
+                <Link href='/make-up'>Beauty tips</Link>
+                <Link href='/vendors/beauticians'>Find a beautician.</Link>
             </>
         )
     }
