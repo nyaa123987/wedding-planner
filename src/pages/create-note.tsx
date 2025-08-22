@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react';
 import { ArrowLeft } from 'lucide-react';
@@ -14,18 +14,6 @@ const CreateNotePage = () => {
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
-  const [debouncedTitle, setDebouncedTitle] = useState(title);
-  const [debouncedContent, setDebouncedContent] = useState(content);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedTitle(title);
-      setDebouncedContent(content);
-    }, 300);
-
-    return () => clearTimeout(handler);
-  }, [title, content]);
 
   const handleSave = async () => {
     setError('');

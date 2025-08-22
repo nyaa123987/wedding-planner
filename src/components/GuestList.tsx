@@ -1,42 +1,61 @@
 import { useState, useEffect } from 'react';
-import { useUser } from '@clerk/nextjs';
 import { supabase } from '../lib/supabaseClient';
 import { Guest } from '../types/guest';
 import GuestItem from './GuestItem';
 import AddGuestForm from './AddGuestForm';
 
 const GuestList = () => {
-  const { user } = useUser();
   const [guests, setGuests] = useState<Guest[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [editGuest, setEditGuest] = useState<Guest | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  // Fetch guests
+  useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        console.error('Error fetching user:', error);
+      } else {
+        setUserId(data.user?.id ?? null);
+      }
+    };
+
+    getUser();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUserId(session?.user?.id ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   const fetchGuests = async () => {
-    if (!user) return;
+    if (!userId) return;
     const { data, error } = await supabase
       .from('guests')
       .select('*')
-      .eq('user_id', user.id)
+      .eq('user_id', userId)
       .order('name', { ascending: true });
 
     if (error) {
       console.error(error);
     } else {
-      setGuests(data);
+      setGuests(data || []);
     }
   };
 
   useEffect(() => {
     fetchGuests();
-  }, [user]);
+  }, [userId]);
 
-  // Add or edit guest
   const handleSubmit = async (guest: Guest) => {
-    if (!user) return;
+    if (!userId) return;
 
     if (editGuest) {
-      // Update guest
       const { error } = await supabase
         .from('guests')
         .update({ name: guest.name, email: guest.email })
@@ -46,16 +65,15 @@ const GuestList = () => {
         console.error(error);
       }
     } else {
-      // Add new guest
       const { data, error } = await supabase
         .from('guests')
-        .insert([{ ...guest, user_id: user.id }])
+        .insert([{ ...guest, user_id: userId }])
         .select()
         .single();
 
       if (error) {
         console.error(error);
-      } else {
+      } else if (data) {
         setGuests((prev) => [...prev, data]);
       }
     }
@@ -65,11 +83,13 @@ const GuestList = () => {
     fetchGuests();
   };
 
-  // Remove guest
   const handleRemove = async (id: string) => {
     const { error } = await supabase.from('guests').delete().eq('id', id);
-    if (error) console.error(error);
-    else setGuests((prev) => prev.filter((g) => g.id !== id));
+    if (error) {
+      console.error(error);
+    } else {
+      setGuests((prev) => prev.filter((g) => g.id !== id));
+    }
   };
 
   return (
@@ -83,7 +103,10 @@ const GuestList = () => {
 
       {showForm && (
         <AddGuestForm
-          onClose={() => { setShowForm(false); setEditGuest(null); }}
+          onClose={() => {
+            setShowForm(false);
+            setEditGuest(null);
+          }}
           onSubmit={handleSubmit}
           isEditMode={!!editGuest}
           initialGuest={editGuest || undefined}
@@ -95,7 +118,10 @@ const GuestList = () => {
           <GuestItem
             key={guest.id}
             guest={guest}
-            onEdit={() => { setEditGuest(guest); setShowForm(true); }}
+            onEdit={() => {
+              setEditGuest(guest);
+              setShowForm(true);
+            }}
             onRemove={() => handleRemove(guest.id!)}
           />
         ))}
