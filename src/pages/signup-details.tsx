@@ -42,9 +42,14 @@ export default function SignUpStepTwo() {
       if (supabaseError) throw supabaseError;
 
       router.push('/');
-    } catch (err: any) {
-      console.error('Supabase error:', err.message);
-      setError(err.message || 'Failed to create profile');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Supabase error:", err.message);
+        setError(err.message || "Failed to create profile");
+      } else {
+        console.error("Supabase error:", err);
+        setError("Failed to create profile");
+      }
     }
   };
 

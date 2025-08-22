@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from "../lib/supabaseClient";
 import { motion } from "framer-motion";
+import Image from 'next/image';
 
 export default function LandingPage() {
   const router = useRouter();
@@ -68,7 +69,7 @@ export default function LandingPage() {
       <section className="py-20 px-6 bg-white">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <img
+            <Image
               src="/images/black-couple.jpeg"
               alt="Wedding couple"
               className="h-[70vh] rounded-2xl shadow-lg"
